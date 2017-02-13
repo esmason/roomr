@@ -10,6 +10,6 @@
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
     "react-dom": "^15.4.2",
-    "ubscrapr": ">= 1.0.1"
+    "ubcscrapr": ">= 1.0.1"
   }
 }
