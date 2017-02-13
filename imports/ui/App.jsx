@@ -1,21 +1,16 @@
-import React, { Component } from 'react';
-
+import React, { Component, PropTypes } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
+import ReactDOM from 'react-dom';
 import { Times } from '../api/times.js';
 import Time from './Time.jsx';
+import MyMap from '../MyMap.js';
 
 
 // App component - represents the whole app
-export default class App extends Component {
-  getTimes() {
-    return [
-      { _id: 1, text: 'This is time 1' },
-      { _id: 2, text: 'This is time 2' },
-      { _id: 3, text: 'This is time 3' },
-    ];
-  }
+class App extends Component {
 
   renderTimes() {
-    return this.getTimes().map((time) => (
+    return this.props.times.map((time) => (
       <Time key={time._id} time={time} />
     ));
   }
@@ -25,12 +20,51 @@ export default class App extends Component {
       <div className="container">
         <header>
           <h1>Todo List</h1>
+            <form className="search-db" onSubmit={this.handleSubmit.bind(this)} >
+              <input
+                type="text"
+                ref="textInput"
+                placeholder="Search for data"
+              />
+            </form>
         </header>
-
         <ul>
           {this.renderTimes()}
         </ul>
+        <MyMap/>
       </div>
     );
   }
+
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    // Find the text field via the React ref
+    const text1 = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
+
+    Times.find(
+        {}
+      ).fetch().map((time) => (Times.update({_id: time._id}, {$set :{show: false}}) ));
+
+  Times.find(
+      {text :{$regex: '.*'.concat(text1, ".*")} }
+    ).fetch().map((time) => (Times.update({_id: time._id}, {$set :{show: true}}) ));
+
+
+    // Clear form
+    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  }
+
 }
+
+
+App.propTypes = {
+  times: PropTypes.array.isRequired,
+};
+
+export default createContainer(() => {
+  return {
+    times: Times.find({show: true}).fetch(),
+  };
+}, App);

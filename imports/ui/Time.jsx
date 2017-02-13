@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 export default class Time extends Component {
   render() {
     return (
-      <li>{this.props.time.text}</li>
+      <div>{ this.props.time.show ? <li> {this.props.time.text}</li> : null}</div>
     );
   }
 }
