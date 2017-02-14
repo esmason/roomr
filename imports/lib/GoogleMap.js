@@ -3,7 +3,6 @@ import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
 
-console.log(Meteor.settings.public.google.api_key)
 
 class GoogleMap extends React.Component {
   componentDidMount() {

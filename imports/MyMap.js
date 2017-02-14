@@ -17,12 +17,12 @@ function handleOnReady(name) {
   });
 }
 
-function MyMap() {
+export default class MyMap extends React.Component {
+  render() {
   return (
     <GoogleMap onReady={handleOnReady} mapOptions={handleMapOptions}>
       Loading!
     </GoogleMap>
   );
 }
-
-export default MyMap;
+}
