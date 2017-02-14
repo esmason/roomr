@@ -1,10 +1,13 @@
 import React, { PropTypes } from 'react';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor'
+
+console.log(Meteor.settings.public.google.api_key)
 
 class GoogleMap extends React.Component {
   componentDidMount() {
-    GoogleMaps.load(this.props.options || {key: GOOGLE_MAPS_KEY});
+    GoogleMaps.load(this.props.options || {key: Meteor.settings.public.google.api_key});
   }
 
   componentDidUpdate() {
