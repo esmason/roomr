@@ -18,7 +18,6 @@ class GoogleMap extends React.Component {
         element: this.container,
         options: this.props.mapOptions(),
       });
-
       this.props.onReady(this.name);
     }
   }

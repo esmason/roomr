@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <div className="container">
         <header>
-          <h1>Todo List</h1>
+          <h1>Click map to enter location</h1>
             <form className="search-db" onSubmit={this.handleSubmit.bind(this)} >
               <input
                 type="text"
