@@ -3,6 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Times } from '../api/times.js';
 import Time from './Time.jsx';
+import SearchBar from './SearchBar.jsx';
 import MyMap from '../MyMap.js';
 
 
@@ -20,13 +21,7 @@ class App extends Component {
       <div className="container">
         <header>
           <h1>Click map to enter location</h1>
-            <form className="search-db" onSubmit={this.handleSubmit.bind(this)} >
-              <input
-                type="text"
-                ref="textInput"
-                placeholder="Search for data"
-              />
-            </form>
+            <SearchBar placeholder = "search for data"/>
         </header>
         <ul>
           {this.renderTimes()}
@@ -37,24 +32,7 @@ class App extends Component {
   }
 
 
-  handleSubmit(event) {
-    event.preventDefault();
 
-    // Find the text field via the React ref
-    const text1 = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
-
-    Times.find(
-        {}
-      ).fetch().map((time) => (Times.update({_id: time._id}, {$set :{show: false}}) ));
-
-  Times.find(
-      {text :{$regex: '.*'.concat(text1, ".*")} }
-    ).fetch().map((time) => (Times.update({_id: time._id}, {$set :{show: true}}) ));
-
-
-    // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = '';
-  }
 
 }
 
