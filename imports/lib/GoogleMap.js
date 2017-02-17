@@ -7,19 +7,24 @@ import { Meteor } from 'meteor/meteor'
 class GoogleMap extends React.Component {
   componentDidMount() {
     GoogleMaps.load(this.props.options || {key: Meteor.settings.public.google.api_key});
+    this.timer = setInterval( () => this.createMap(), 100);
   }
 
   componentDidUpdate() {
+    //console.log("updating...");
+  }
+
+  createMap(){
     if (this.props.loaded) {
       this.name = Random.id();
-
       GoogleMaps.create({
         name: this.name,
         element: this.container,
         options: this.props.mapOptions(),
       });
       this.props.onReady(this.name);
-    }
+      clearInterval(this.timer);
+     }
   }
 
   componentWillUnmount() {
@@ -28,6 +33,7 @@ class GoogleMap extends React.Component {
       delete GoogleMaps.maps[this.name];
     }
   }
+
 
   render() {
     return (

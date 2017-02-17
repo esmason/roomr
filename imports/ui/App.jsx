@@ -4,11 +4,25 @@ import ReactDOM from 'react-dom';
 import { Times } from '../api/times.js';
 import Time from './Time.jsx';
 import SearchBar from './SearchBar.jsx';
-import MyMap from '../MyMap.js';
+import MyMap from '../MyMap.jsx';
 
 
 // App component - represents the whole app
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      userLocation: null
+    }
+    this.handleMapClick = this.handleMapClick.bind(this);
+   }
+
+  handleMapClick(event) {
+      this.setState({
+        userLocation: event.latLng
+      });
+    }
+
 
   renderTimes() {
     return this.props.times.map((time) => (
@@ -26,7 +40,7 @@ class App extends Component {
         <ul>
           {this.renderTimes()}
         </ul>
-        <MyMap/>
+        <MyMap onMapClick = {this.handleMapClick}/>
       </div>
     );
   }
