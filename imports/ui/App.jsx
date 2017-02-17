@@ -30,11 +30,20 @@ class App extends Component {
     ));
   }
 
+  getUserLoc(){
+    if (this.state.userLocation){
+      return "Lat: ".concat(this.state.userLocation.lat(), " Lng: ",this.state.userLocation.lng());
+    }
+    else {
+      return "Click map to enter location"
+    }
+  }
+
   render() {
     return (
       <div className="container">
         <header>
-          <h1>Click map to enter location</h1>
+          <h1>{this.getUserLoc()}</h1>
             <SearchBar placeholder = "search for data"/>
         </header>
         <ul>
