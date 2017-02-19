@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { Times } from '../api/times.js';
 import Time from './Time.jsx';
 import SearchBar from './SearchBar.jsx';
-import MyMap from '../MyMap.jsx';
+import MyMap from './MyMap.jsx';
 
 
 // App component - represents the whole app
