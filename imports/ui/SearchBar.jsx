@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
 import { Times } from '../api/times.js';
 import Time from './Time.jsx';
-import MyMap from '../MyMap.jsx';
+import MyMap from './MyMap.jsx';
 
 
 export default class SearchBar extends Component{
