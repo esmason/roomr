@@ -63,7 +63,7 @@ function persistRoomSlotsAsBuildings(roomSlots) {
                 longitude: 0 //set later on as a batch call to google API
             };
             Buildings.insert(newBuilding);
-            building = newBuilding;
+            building = Buildings.findOne({name: roomSlot['building']});;
             newBuildings.push(building);
         }
         let room = Rooms.findOne({name: roomSlot['roomID'], building: building['_id']});
@@ -73,7 +73,7 @@ function persistRoomSlotsAsBuildings(roomSlots) {
                 building: building['_id']
             };
             Rooms.insert(newRoom);
-            room = newRoom;
+            room = Rooms.findOne({name: roomSlot['roomID'], building: building['_id']});
         }
         let newRoomSlot = {
             building: building['_id'],
