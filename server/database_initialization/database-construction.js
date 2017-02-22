@@ -34,6 +34,7 @@ export function persistRoomSlotsAsBuildings(roomSlots) {
         parseRoomSlot(roomSlot, building, room);
     });
     geocodeBuildings(newBuildings);
+    console.log("Database Initialized!");
 }
 
 /**

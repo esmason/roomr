@@ -8,7 +8,7 @@ Meteor.methods({
     /**
      * Populates the Rooms collection with database scraped from ubc.ca. The scraped data is stored in roomSlots.json
      */
-    'populateBuildingDatabase': function () {
+    'populateDatabase': function () {
         RoomSlots.remove({});
         Rooms.remove({});
         Buildings.remove({});
