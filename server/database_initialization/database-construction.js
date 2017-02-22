@@ -26,7 +26,7 @@ import { RoomSlots, Rooms, Buildings } from '/imports/database/collections';
     "address": "1866 Main Mall"
    {
  */
-export function persistRoomSlotsAsBuildings(roomSlots) {
+export function persistScraperRoomSlots(roomSlots) {
     const newBuildings = [];
     roomSlots.forEach(function (roomSlot) {
         let building = parseBuilding(roomSlot, newBuildings); // mutates newBuildings

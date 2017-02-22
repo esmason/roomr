@@ -2,7 +2,7 @@ import '../imports/api/times.js';
 import './database_initialization/database-construction.js';
 import '../imports/database/collections';
 import { RoomSlots, Rooms, Buildings } from '../imports/database/collections';
-import { persistRoomSlotsAsBuildings } from './database_initialization/database-construction'
+import { persistScraperRoomSlots } from './database_initialization/database-construction'
 
 Meteor.methods({
     /**
@@ -13,6 +13,6 @@ Meteor.methods({
         Rooms.remove({});
         Buildings.remove({});
         const roomSlotsJSON = JSON.parse(Assets.getText('roomSlots.json'));
-        persistRoomSlotsAsBuildings(roomSlotsJSON);
+        persistScraperRoomSlots(roomSlotsJSON);
     }
 });
