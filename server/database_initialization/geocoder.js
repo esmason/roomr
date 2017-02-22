@@ -1,9 +1,14 @@
 import NodeGeocoder from 'node-geocoder';
-import geocoderOptions from '/server/database_initialization/geocoderSettings'
-import {Buildings} from './DatabaseConstruction'
+import { Buildings } from '/imports/database/collections';
+import { Meteor } from 'meteor/meteor';
 
-const geocoder = NodeGeocoder(geocoderOptions);
+const geocoder = NodeGeocoder(Meteor.settings.geocoderOptions);
 
+/**
+ * Takes an array of building objects corresponding to the buildings in the buildings collection and updates their
+ * latitude and longitude properties.
+ * @param buildings
+ */
 export function geocodeBuildings(buildings) {
     const addresses = buildings.map(function (building) {
         return building['address'] + " Vancouver B.C. Canada";
@@ -14,17 +19,7 @@ export function geocodeBuildings(buildings) {
             if (err) {
                 reject(err);
             } else {
-                const updateObjects = [];
-                for (let i = 0; i < res.length; i++) {
-                    let currResult = res[i]['value'][0];
-                    let updateObject = {
-                        newLat: currResult['latitude'],
-                        newLon: currResult['longitude'],
-                        id: buildings[i]['_id'] // GOOGLE returns the addresses in the same order as given
-                    };
-                    updateObjects.push(updateObject);
-                }
-                resolve(updateObjects);
+                resolve(collectLatLons(res, buildings));
             }
         });
     });
@@ -38,6 +33,32 @@ export function geocodeBuildings(buildings) {
     })
 }
 
+/**
+ * Takes the response from the google API and a list of buildings and calculates the correct latitudes and
+ * longitudes for each building.
+ * @param geocodeResponse
+ * @param buildings
+ */
+function collectLatLons(geocodeResponse, buildings) {
+    const updateObjects = [];
+    for (let i = 0; i < geocodeResponse.length; i++) {
+        let currResult = geocodeResponse[i]['value'][0];
+        let updateObject = {
+            newLat: currResult['latitude'],
+            newLon: currResult['longitude'],
+            id: buildings[i]['_id'] // GOOGLE returns the addresses in the same order as given
+        };
+        updateObjects.push(updateObject);
+    }
+    return updateObjects;
+}
+
+/**
+ * Takes a singular building and the correct latitude and longitude and updates the building.
+ * @param newLat
+ * @param newLon
+ * @param id
+ */
 function updateBuildingWithLatLon(newLat, newLon, id) {
     Buildings.update(id, {
         $set: {latitude: newLat, longitude: newLon}

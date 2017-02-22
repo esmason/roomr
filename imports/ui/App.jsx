@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Times } from '../api/times.js';
-import Time from './Time.jsx';
-import SearchBar from './SearchBar.jsx';
-import MyMap from './MyMap.jsx';
+import Time from './time.jsx';
+import SearchBar from './search-bar.jsx';
+import MyMap from './my-map.jsx';
 
 // App component - represents the whole app
 class App extends Component {
