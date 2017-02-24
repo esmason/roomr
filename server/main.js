@@ -1,9 +1,9 @@
 import '../imports/api/times.js'
 import '../imports/database/collections';
-import './database-access/retrieve-buildings.js'
+import './database_access/retrieve-buildings.js'
 import { RoomSlots, Rooms, Buildings } from '../imports/database/collections';
 import { persistScraperRoomSlots } from './database_initialization/database-construction';
-import { getClosestAvailableBuildings } from './database-access/retrieve-buildings.js';
+import { getClosestAvailableBuildings } from './database_access/retrieve-buildings.js';
 
 Meteor.methods({
     /**
