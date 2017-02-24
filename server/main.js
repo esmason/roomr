@@ -7,13 +7,13 @@ import { getClosestAvailableBuildings } from './database_access/retrieve-buildin
 
 Meteor.methods({
     /**
-     * Populates the Rooms collection with database scraped from ubc.ca. The scraped data is stored in roomSlots.json
+     * Populates the Rooms collection with database scraped from ubc.ca. The scraped data is stored in room-slots.json
      */
     'populateDatabase': function () {
         RoomSlots.remove({});
         Rooms.remove({});
         Buildings.remove({});
-        const roomSlotsJSON = JSON.parse(Assets.getText('roomSlots.json'));
+        const roomSlotsJSON = JSON.parse(Assets.getText('room-slots.json'));
         persistScraperRoomSlots(roomSlotsJSON);
     },
 

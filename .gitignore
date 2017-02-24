@@ -3,4 +3,4 @@ node_modules/
 settings.json
 /server/database_initialization/geocoderSettings.js
 /private
-!/private/roomSlots.json
+!/private/room-slots.json
