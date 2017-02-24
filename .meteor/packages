@@ -25,3 +25,4 @@ dburles:google-maps
 aldeed:simple-schema
 modules@0.7.7
 dburles:collection-helpers
+reactive-dict

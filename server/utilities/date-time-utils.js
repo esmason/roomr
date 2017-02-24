@@ -1,3 +1,5 @@
+import { LocalTime } from 'js-joda';
+
 /**
  * Takes a written day and returns the index of the day. 0 = Sunday, 6 = Saturday.
  * @param day
@@ -25,16 +27,25 @@ export function convertDayToIndex(day) {
 }
 
 /**
- * In order to parse time as a time object, it needs to be in the format of hh:mm. Many times come in the format of
+ * In order to parse a string as a time object, it needs to be in the format of hh:mm. Many times come in the format of
  * h:mm (e.g 9:00) so we need to pad the time (e.g. 09:00).
  * @param time
- * @returns string
+ * @returns (LocalTime)
  */
-export function padTime(time) {
+export function stringToLocalTime(time) {
     const split = time.split(":");
     if (split[0].length == 1) {
-        return(`0${ split[0] }:${ split[1] }`)
+        return LocalTime.parse((`0${ split[0] }:${ split[1] }`))
     } else{
-        return time;
+        return LocalTime.parse(time);
     }
+}
+
+/**
+ * This function trivially parses a mongo object (stored LocalTime) into a new LocalTime instance.
+ * @param mongoTime
+ * @returns {LocalTime}
+ */
+export function mongoToLocalTime(mongoTime) {
+    return LocalTime.of(mongoTime["_hour"], mongoTime["_minute"])
 }

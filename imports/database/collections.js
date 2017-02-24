@@ -35,14 +35,14 @@ RoomSlots.schema = new SimpleSchema({
 /**
  * HELPERS
  */
-Buildings.helpers = {
+Buildings.helpers({
     Rooms() {
-        return Rooms.find({building: this._id});
+        return Rooms.find({building: this._id}).fetch();
     }
-};
+});
 
-Rooms.helpers = {
+Rooms.helpers({
     RoomSlots() {
-        return RoomSlots.find({room: this._id});
+        return RoomSlots.find({room: this._id}).fetch();
     }
-};
+});

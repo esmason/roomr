@@ -1,6 +1,5 @@
 import { geocodeBuildings } from './geocoder';
-import { LocalTime } from 'js-joda';
-import { padTime, convertDayToIndex } from '/server/database_initialization/date-time-utils';
+import { convertDayToIndex, stringToLocalTime } from '/server/utilities/date-time-utils';
 import { RoomSlots, Rooms, Buildings } from '/imports/database/collections';
 
 /**
@@ -91,8 +90,8 @@ function parseRoomSlot(roomSlot, building, room) {
         building: building['_id'],
         room: room['_id'],
         days: roomSlot['day'].map(convertDayToIndex),
-        startTime: LocalTime.parse(padTime(roomSlot['startTime'])),
-        endTime: LocalTime.parse(padTime(roomSlot['endTime'])),
+        startTime: stringToLocalTime(roomSlot['startTime']),
+        endTime: stringToLocalTime(roomSlot['endTime']),
         occupier: roomSlot['sectionID']
     };
     RoomSlots.schema.validate(newRoomSlot);

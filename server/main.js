@@ -1,8 +1,9 @@
-import '../imports/api/times.js';
-import './database_initialization/database-construction.js';
+import '../imports/api/times.js'
 import '../imports/database/collections';
+import './database-access/retrieve-buildings.js'
 import { RoomSlots, Rooms, Buildings } from '../imports/database/collections';
-import { persistScraperRoomSlots } from './database_initialization/database-construction'
+import { persistScraperRoomSlots } from './database_initialization/database-construction';
+import { getClosestAvailableBuildings } from './database-access/retrieve-buildings.js';
 
 Meteor.methods({
     /**
@@ -14,5 +15,11 @@ Meteor.methods({
         Buildings.remove({});
         const roomSlotsJSON = JSON.parse(Assets.getText('roomSlots.json'));
         persistScraperRoomSlots(roomSlotsJSON);
-    }
+    },
+
+    /**
+     * Gets the n closest buildings to a given lat/lon at a given time on a given day, where none of the returned
+     * buildings have zero unoccupied rooms.
+     */
+    'getClosestNAvailableBuildings': getClosestAvailableBuildings
 });
