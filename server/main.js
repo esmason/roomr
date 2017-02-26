@@ -21,5 +21,5 @@ Meteor.methods({
      * Gets the n closest buildings to a given lat/lon at a given time on a given day, where none of the returned
      * buildings have zero unoccupied rooms.
      */
-    'getClosestNAvailableBuildings': getClosestAvailableBuildings
+    'getClosestAvailableBuildings': getClosestAvailableBuildings
 });
