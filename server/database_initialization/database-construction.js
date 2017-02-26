@@ -5,11 +5,11 @@ import { Rooms } from '/imports/database/rooms';
 import { RoomSlots } from '/imports/database/roomSlots';
 
 /**
- * Transforms room slots into useful database objects by populating the buildings, rooms, and roomslots collections
+ * Transforms room slots into useful database objects by populating the createdBuildings, rooms, and roomslots collections
  * appropriately.
  *
  * roomSlots that are passed into this function are not appropriate for the app's usage. We parse them into
- * buildings, rooms and a stripped down version of the roomSlot.
+ * createdBuildings, rooms and a stripped down version of the roomSlot.
  *
  * roomSlots are a JSON object containing an array of roomSlots. Example of a singular roomSlot:
  *
@@ -28,20 +28,20 @@ import { RoomSlots } from '/imports/database/roomSlots';
    }
  */
 export function persistScraperRoomSlots(roomSlots) {
-    const buildings = [];
+    const createdBuildings = [];
     roomSlots.forEach(function (roomSlot) {
-        let building = getOrCreateBuilding(roomSlot, buildings); // mutates buildings
+        let building = getOrCreateBuilding(roomSlot, createdBuildings); // mutates createdBuildings
         let room = getOrCreateRoom(roomSlot, building);
         createRoomSlot(roomSlot, building, room);
     });
-    geocodeBuildings(buildings);
+    geocodeBuildings(createdBuildings);
     console.log("Database Initialized!");
 }
 
 /**
- * Takes a roomSlot and gets the relevant building from the buildings collection, or adds it if it didn't exist.
+ * Takes a roomSlot and gets the relevant building from the createdBuildings collection, or adds it if it didn't exist.
  */
-function getOrCreateBuilding(roomSlot, buildings) {
+function getOrCreateBuilding(roomSlot, createdBuildings) {
     let building = Buildings.findOne({name: roomSlot['building']});
     if (typeof building === 'undefined') {
         let newBuilding = {
@@ -53,7 +53,7 @@ function getOrCreateBuilding(roomSlot, buildings) {
         Buildings.schema.validate(newBuilding);
         Buildings.insert(newBuilding);
         building = Buildings.findOne({name: roomSlot['building']});
-        buildings.push(building);
+        createdBuildings.push(building);
     }
     return building;
 }

@@ -1,8 +1,6 @@
 /**
  * Haversine formula for calculating distances on a sphere. Adapted from Chuck here:
  * http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
- *
- *
  */
 export function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     const R = 6371;
