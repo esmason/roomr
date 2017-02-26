@@ -6,10 +6,6 @@ import MyMap from './my-map.jsx';
 // App component - represents the whole app
 class App extends Component {
     constructor(props){
-        import { Meteor } from 'meteor/meteor';
-        Meteor.call('getClosestAvailableBuildings', 5, 49.260605, -123.245994, "16:00", 2, function(error, data) {
-            console.log(data);
-        });
         super(props);
         this.state = {
             userLocation: null
