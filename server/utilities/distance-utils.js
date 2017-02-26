@@ -12,6 +12,7 @@ export function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
         Math.cos(degToRad(lat1)) * Math.cos(degToRad(lat2)) *
         Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
     return R * c;
 }
 
@@ -22,6 +23,9 @@ function degToRad(deg) {
     return deg * (Math.PI/180)
 }
 
+/**
+ * Validates to ensure that the given lat/lons are valid.
+ */
 function validateInputs(lat1, lon1, lat2, lon2) {
     if (Math.abs(lat1) > 90 || Math.abs(lat2) > 90 || !lat1 || !lat2) {
         throw new Error("Invalid latitude");
