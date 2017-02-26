@@ -6,10 +6,12 @@
   },
   "dependencies": {
     "babel-runtime": "6.18.0",
+    "js-joda": "1.3.0",
     "meteor-node-stubs": "~0.2.0",
+    "moment": "^2.17.1",
+    "node-geocoder": "^3.16.0",
     "react": "^15.4.2",
     "react-addons-pure-render-mixin": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "ubcscrapr": ">= 1.0.1"
+    "react-dom": "^15.4.2"
   }
 }

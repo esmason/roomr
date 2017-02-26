@@ -1,3 +1,6 @@
 node_modules/
 .idea/*
 settings.json
+/server/database_initialization/geocoderSettings.js
+/private
+!/private/room-slots.json
