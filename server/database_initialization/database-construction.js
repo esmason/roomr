@@ -1,15 +1,17 @@
 import { geocodeBuildings } from './geocoder';
 import { convertDayToIndex, stringToLocalTime } from '/server/utilities/date-time-utils';
-import { RoomSlots, Rooms, Buildings } from '/imports/database/collections';
+import { Buildings } from '/imports/database/buildings';
+import { Rooms } from '/imports/database/rooms';
+import { RoomSlots } from '/imports/database/roomSlots';
 
 /**
- * Transforms room slots into useful database objects by populating the buildings, rooms, and roomslots collections
+ * Transforms room slots into useful database objects by populating the createdBuildings, rooms, and roomslots collections
  * appropriately.
  *
  * roomSlots that are passed into this function are not appropriate for the app's usage. We parse them into
- * buildings, rooms and a stripped down version of the roomSlot.
+ * createdBuildings, rooms and a stripped down version of the roomSlot.
  *
- * @param roomSlots: JSON object containing array of roomSlots. Example:
+ * roomSlots are a JSON object containing an array of roomSlots. Example of a singular roomSlot:
  *
  * {
     "day": [
@@ -23,26 +25,23 @@ import { RoomSlots, Rooms, Buildings } from '/imports/database/collections';
     "roomID": "B313",
     "sectionID": "ANTH 201A 001",
     "address": "1866 Main Mall"
-   {
+   }
  */
 export function persistScraperRoomSlots(roomSlots) {
-    const newBuildings = [];
+    const createdBuildings = [];
     roomSlots.forEach(function (roomSlot) {
-        let building = parseBuilding(roomSlot, newBuildings); // mutates newBuildings
-        let room = parseRoom(roomSlot, building);
-        parseRoomSlot(roomSlot, building, room);
+        let building = getOrCreateBuilding(roomSlot, createdBuildings); // mutates createdBuildings
+        let room = getOrCreateRoom(roomSlot, building);
+        createRoomSlot(roomSlot, building, room);
     });
-    geocodeBuildings(newBuildings);
+    geocodeBuildings(createdBuildings);
     console.log("Database Initialized!");
 }
 
 /**
- * Takes a roomSlot and gets the relevant building from the buildings collection, or adds it if it didn't exist.
- * @param roomSlot
- * @param newBuildings: an array of the buildings that did not already belong to the buildings collection.
- * @returns building
+ * Takes a roomSlot and gets the relevant building from the createdBuildings collection, or adds it if it didn't exist.
  */
-function parseBuilding(roomSlot, newBuildings) {
+function getOrCreateBuilding(roomSlot, createdBuildings) {
     let building = Buildings.findOne({name: roomSlot['building']});
     if (typeof building === 'undefined') {
         let newBuilding = {
@@ -54,18 +53,15 @@ function parseBuilding(roomSlot, newBuildings) {
         Buildings.schema.validate(newBuilding);
         Buildings.insert(newBuilding);
         building = Buildings.findOne({name: roomSlot['building']});
-        newBuildings.push(building);
+        createdBuildings.push(building);
     }
     return building;
 }
 
 /**
  * Takes a roomSlot and gets the relevant room from the rooms collection, or adds it if it didn't exist.
- * @param roomSlot
- * @param building
- * @returns room
  */
-function parseRoom(roomSlot, building) {
+function getOrCreateRoom(roomSlot, building) {
     let room = Rooms.findOne({name: roomSlot['roomID'], building: building['_id']});
     if (typeof room === 'undefined') {
         let newRoom = {
@@ -81,11 +77,8 @@ function parseRoom(roomSlot, building) {
 
 /**
  * Takes a roomSlot and parses it into a roomr roomSlot object and stores it into the roomSlot collection.
- * @param roomSlot
- * @param building
- * @param room
  */
-function parseRoomSlot(roomSlot, building, room) {
+function createRoomSlot(roomSlot, building, room) {
     let newRoomSlot = {
         building: building['_id'],
         room: room['_id'],

@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
-import { Times } from '../api/times.js';
-import Time from './time.jsx';
 import MyMap from './my-map.jsx';
 
 

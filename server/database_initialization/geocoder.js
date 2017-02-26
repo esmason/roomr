@@ -1,5 +1,5 @@
 import NodeGeocoder from 'node-geocoder';
-import { Buildings } from '/imports/database/collections';
+import { Buildings } from '/imports/database/buildings';
 import { Meteor } from 'meteor/meteor';
 
 const geocoder = NodeGeocoder(Meteor.settings.geocoderOptions);
@@ -7,7 +7,6 @@ const geocoder = NodeGeocoder(Meteor.settings.geocoderOptions);
 /**
  * Takes an array of building objects corresponding to the buildings in the buildings collection and updates their
  * latitude and longitude properties.
- * @param buildings
  */
 export function geocodeBuildings(buildings) {
     const addresses = buildings.map(function (building) {
@@ -36,8 +35,6 @@ export function geocodeBuildings(buildings) {
 /**
  * Takes the response from the google API and a list of buildings and calculates the correct latitudes and
  * longitudes for each building.
- * @param geocodeResponse
- * @param buildings
  */
 function collectLatLons(geocodeResponse, buildings) {
     const updateObjects = [];
@@ -55,12 +52,18 @@ function collectLatLons(geocodeResponse, buildings) {
 
 /**
  * Takes a singular building and the correct latitude and longitude and updates the building.
- * @param newLat
- * @param newLon
- * @param id
  */
 function updateBuildingWithLatLon(newLat, newLon, id) {
+    const newLatLonObject = {'latitude': newLat, 'longitude': newLon};
+    const validLatLon = Buildings.schema.newContext().validateOne(newLatLonObject, 'latitude') &&
+        Buildings.schema.newContext().validateOne(newLatLonObject, 'longitude');
+
+    if (!validLatLon) {
+        throw new Error("Invalid latitude or longitude");
+    }
+
     Buildings.update(id, {
-        $set: {latitude: newLat, longitude: newLon}
+        $set: newLatLonObject
     });
 }
+
