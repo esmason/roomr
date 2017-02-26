@@ -1,7 +1,6 @@
-import '../imports/api/times.js'
-import '../imports/database/collections';
-import './database_access/retrieve-buildings.js'
-import { RoomSlots, Rooms, Buildings } from '../imports/database/collections';
+import { Buildings } from '/imports/database/buildings';
+import { Rooms } from '/imports/database/rooms';
+import { RoomSlots } from '/imports/database/roomSlots';
 import { persistScraperRoomSlots } from './database_initialization/database-construction';
 import { getClosestAvailableBuildings } from './database_access/retrieve-buildings.js';
 

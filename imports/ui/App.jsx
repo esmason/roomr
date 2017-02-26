@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-import { Times } from '../api/times.js';
-import Time from './time.jsx';
 import SearchBar from './search-bar.jsx';
 import MyMap from './my-map.jsx';
 
 // App component - represents the whole app
 class App extends Component {
     constructor(props){
+        import { Meteor } from 'meteor/meteor';
+        Meteor.call('getClosestAvailableBuildings', 5, 49.260605, -123.245994, "16:00", 2, function(error, data) {
+            console.log(data);
+        });
         super(props);
         this.state = {
             userLocation: null
@@ -19,12 +21,6 @@ class App extends Component {
         this.setState({
             userLocation: event.latLng
         });
-    }
-
-    renderTimes() {
-        return this.props.times.map((time) => (
-            <Time key={time._id} time={time} />
-        ));
     }
 
     getUserLoc(){
@@ -43,21 +39,14 @@ class App extends Component {
                     <h1>{this.getUserLoc()}</h1>
                     <SearchBar placeholder = "search for data"/>
                 </header>
-                <ul>
-                    {this.renderTimes()}
-                </ul>
                 <MyMap onMapClick = {this.handleMapClick}/>
             </div>
         );
     }
 }
 
-App.propTypes = {
-    times: PropTypes.array.isRequired,
-};
-
 export default createContainer(() => {
     return {
-        times: Times.find({show: true}).fetch(),
+
     };
 }, App);
