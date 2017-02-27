@@ -35,7 +35,7 @@ class App extends Component {
                     <h1>{this.getUserLoc()}</h1>
                     <SearchBar placeholder = "search for data"/>
                 </header>
-                <MyMap onMapClick = {this.handleMapClick}/>
+                <MyMap onMapClick = {this.handleMapClick} userLocation={this.state.userLocation}/>
             </div>
         );
     }
