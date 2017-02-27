@@ -6,6 +6,7 @@ import {Buildings} from '../database/buildings'
 
 
 class GoogleMap extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -77,21 +78,21 @@ GoogleMap.propTypes = {
 };
 
  GoogleMapContainer = createContainer(
-                        (props) => {
-                            if (props.userLocation){
-                            let subscription = Meteor.subscribe(
-                                                "buildings",
-                                                props.userLocation.lat(),
-                                                props.userLocation.lng(),
-                                            );
-                            }
-                            return{
-                                loaded: GoogleMaps.loaded(),
-                                buildings: (props.userLocation)?
-                                 Buildings.find({}).fetch() : [],
-                            };
-                        },
-                        GoogleMap,
-                    );
+    (props) => {
+        if (props.userLocation){
+            let subscription = Meteor.subscribe(
+            "buildings",
+            props.userLocation.lat(),
+            props.userLocation.lng(),
+            );
+        }
+        return{
+            loaded: GoogleMaps.loaded(),
+            buildings: (props.userLocation)?
+             Buildings.find({}).fetch() : [],
+        };
+    },
+    GoogleMap,
+);
 
 export default GoogleMapContainer;
