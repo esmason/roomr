@@ -2,16 +2,27 @@ import React, { PropTypes } from 'react';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
+import {Buildings} from '../database/buildings'
 
 
 class GoogleMap extends React.Component {
   componentDidMount() {
     GoogleMaps.load(this.props.options || {key: Meteor.settings.public.google.api_key});
     this.timer = setInterval( () => this.createMap(), 100);
+    this.renderBuilding = this.renderBuilding.bind(this);
   }
 
   componentDidUpdate() {
-    //console.log("updating...");
+    if (this.props.buildings){
+        for (let i = 0; i < this.props.buildings.length; i++) {
+            building = this.props.buildings[i];
+            let latLng = {lat: building.latitude, lng: building.longitude};
+            new google.maps.Marker({
+               position: latLng,
+               map: GoogleMaps.maps[this.name].instance,
+           });
+       }
+    }
   }
 
   createMap(){
@@ -50,8 +61,26 @@ GoogleMap.propTypes = {
   options: PropTypes.object,
   mapOptions: PropTypes.func.isRequired,
   children: PropTypes.node,
+  buildings: PropTypes.object,
 };
 
-GoogleMapContainer = createContainer(() => ({ loaded: GoogleMaps.loaded() }), GoogleMap);
+ GoogleMapContainer = createContainer((props) => {
+    Meteor.subscribe("buildings");
+    /* bbs = Meteor.call('getClosestAvailableBuildings',
+        5,
+        49.260605,
+        -123.245994,
+        "16:00",
+        2,
+        Buildings,
+        function(error, data) {
+            console.log(data);
+});
+*/
+    return{
+    loaded: GoogleMaps.loaded(),
+    buildings: (props.userLocation)?  Buildings.find({}).fetch() : [],
+    };
+}, GoogleMap);
 
 export default GoogleMapContainer;

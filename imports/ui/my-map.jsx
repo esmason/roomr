@@ -9,11 +9,16 @@ export default class MyMap extends React.Component {
 
     render() {
         return (
-            <GoogleMap onReady={this.handleOnReady.bind(this)} mapOptions={this.handleMapOptions}>
+            <GoogleMap
+                onReady={this.handleOnReady.bind(this)}
+                mapOptions={this.handleMapOptions}
+                userLocation={this.props.userLocation}
+                >
                 Loading!
             </GoogleMap>
         );
     }
+
 
     handleMapOptions() {
         return( {
