@@ -50,7 +50,9 @@ class GoogleMap extends React.Component {
 
   componentWillUnmount() {
     if (GoogleMaps.maps[this.name]) {
-      google.maps.event.clearInstanceListeners(GoogleMaps.maps[this.name].instance);
+      google.maps.event.clearInstanceListeners(
+          GoogleMaps.maps[this.name].instance,
+      );
       delete GoogleMaps.maps[this.name];
     }
   }
@@ -74,14 +76,22 @@ GoogleMap.propTypes = {
   buildings: PropTypes.object,
 };
 
- GoogleMapContainer = createContainer((props) => {
-    if (props.userLocation){
-    let subscription = Meteor.subscribe("buildings", props.userLocation.lat(), props.userLocation.lng());
-}
-    return{
-    loaded: GoogleMaps.loaded(),
-    buildings: (props.userLocation)?  Buildings.find({}).fetch() : [],
-    };
-}, GoogleMap);
+ GoogleMapContainer = createContainer(
+                        (props) => {
+                            if (props.userLocation){
+                            let subscription = Meteor.subscribe(
+                                                "buildings",
+                                                props.userLocation.lat(),
+                                                props.userLocation.lng(),
+                                            );
+                            }
+                            return{
+                                loaded: GoogleMaps.loaded(),
+                                buildings: (props.userLocation)?
+                                 Buildings.find({}).fetch() : [],
+                            };
+                        },
+                        GoogleMap,
+                    );
 
 export default GoogleMapContainer;
