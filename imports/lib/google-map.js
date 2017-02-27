@@ -6,21 +6,31 @@ import {Buildings} from '../database/buildings'
 
 
 class GoogleMap extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            markers: []
+        }
+    }
+
   componentDidMount() {
     GoogleMaps.load(this.props.options || {key: Meteor.settings.public.google.api_key});
     this.timer = setInterval( () => this.createMap(), 100);
-    this.renderBuilding = this.renderBuilding.bind(this);
   }
 
   componentDidUpdate() {
     if (this.props.buildings){
+        for (let i = 0; i < this.state.markers.length; i++){
+            this.state.markers[i].setMap(null);
+        }
         for (let i = 0; i < this.props.buildings.length; i++) {
             building = this.props.buildings[i];
             let latLng = {lat: building.latitude, lng: building.longitude};
-            new google.maps.Marker({
+            let marker = new google.maps.Marker({
                position: latLng,
                map: GoogleMaps.maps[this.name].instance,
            });
+           this.state.markers.push(marker);
        }
     }
   }
@@ -65,18 +75,9 @@ GoogleMap.propTypes = {
 };
 
  GoogleMapContainer = createContainer((props) => {
-    Meteor.subscribe("buildings");
-    /* bbs = Meteor.call('getClosestAvailableBuildings',
-        5,
-        49.260605,
-        -123.245994,
-        "16:00",
-        2,
-        Buildings,
-        function(error, data) {
-            console.log(data);
-});
-*/
+    if (props.userLocation){
+    let subscription = Meteor.subscribe("buildings", props.userLocation.lat(), props.userLocation.lng());
+}
     return{
     loaded: GoogleMaps.loaded(),
     buildings: (props.userLocation)?  Buildings.find({}).fetch() : [],
