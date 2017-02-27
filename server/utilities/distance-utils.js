@@ -32,6 +32,6 @@ function validateInputs(lat1, lon1, lat2, lon2) {
     }
 
     if (Math.abs(lon1) > 180 || Math.abs(lon2) > 180 || !lon1 || !lon2) {
-        throw new Error("Invalid latitude");
+        throw new Error("Invalid longitude");
     }
 }
