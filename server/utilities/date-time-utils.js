@@ -20,7 +20,7 @@ export function convertDayToIndex(day) {
         case "Sat":
             return 6;
         default:
-            throw (`${ day } is not a valid day.`);
+            throw new Error(`${ day } is not a valid day.`);
     }
 }
 

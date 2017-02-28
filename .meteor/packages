@@ -26,3 +26,4 @@ aldeed:simple-schema
 modules@0.7.9
 dburles:collection-helpers
 reactive-dict@1.1.8
+practicalmeteor:mocha
