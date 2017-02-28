@@ -15,6 +15,20 @@ describe('distance-utils', function () {
             chai.expect(() => getDistanceFromLatLonInKm(lat, lon, lat, lon)).to.throw();
         });
 
+        it('throws an error when given a latitude that is a string', function () {
+            const lat = "corgi";
+            const lon = -50;
+            chai.expect(() => getDistanceFromLatLonInKm(lat, lon, lat, lon)).to.throw();
+            console.log(lon);
+        });
+
+        it('throws an error when given a longitude that is a string', function () {
+            const lat = 40;
+            const lon = "corgi";
+            chai.expect(() => getDistanceFromLatLonInKm(lat, lon, lat, lon)).to.throw();
+            console.log(lon);
+        });
+
         it('throws an error when given null values', function () {
             const lat = null;
             const lon = null;
