@@ -27,11 +27,19 @@ function degToRad(deg) {
  * Validates to ensure that the given lat/lons are valid.
  */
 function validateInputs(lat1, lon1, lat2, lon2) {
-    if (Math.abs(lat1) > 90 || Math.abs(lat2) > 90 || !lat1 || !lat2) {
+    if (isNaN(lat1) || isNaN(lat2) || !lat1 || !lat2) {
+        throw new Error("Input lat is not a number");
+    }
+
+    if (Math.abs(lat1) > 90 || Math.abs(lat2) > 90) {
         throw new Error("Invalid latitude");
     }
 
-    if (Math.abs(lon1) > 180 || Math.abs(lon2) > 180 || !lon1 || !lon2) {
+    if (isNaN(lon1) || isNaN(lon2) || !lon1 || !lon2) {
+        throw new Error("Input lon is not a number");
+    }
+
+    if (Math.abs(lon1) > 180 || Math.abs(lon2) > 180) {
         throw new Error("Invalid longitude");
     }
 }
