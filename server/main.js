@@ -24,22 +24,20 @@ Meteor.methods({
 });
 
 if (Meteor.isServer) {
-    Meteor.publish('buildings', function buildingsPublication(lat, lng) {
-        let ids = [];
-        Meteor.call(
-            'getClosestAvailableBuildings',
-            1,
-            lat,
-            lng,
-            "16:00",
-            2,
-            function(error, data) {
-                data.forEach(function(map){
-                    ids.push(map._id);
-                });
-            },
-        );
-
-        return Buildings.find({ _id: { $in: ids } });
-    });
+    Meteor.publish(
+        'buildings',
+        function buildingsPublication(lat, lng) {
+            console.log("got buildings");
+            var self = this;
+            var buildings = getClosestAvailableBuildings(
+                1,
+                lat,
+                lng,
+                '16:00',
+                2,
+            )
+            self.added('available-buildings', "test", {buildings: buildings})
+            self.ready()
+    },
+    );
 }

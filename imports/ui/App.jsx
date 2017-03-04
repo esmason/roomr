@@ -35,7 +35,9 @@ class App extends Component {
                     <h1>{this.getUserLoc()}</h1>
                     <SearchBar placeholder = "search for data"/>
                 </header>
-                <MyMap onMapClick = {this.handleMapClick} userLocation={this.state.userLocation}/>
+                <MyMap onMapClick = {this.handleMapClick}
+                    userLocation={this.state.userLocation}
+                />
             </div>
         );
     }
@@ -43,6 +45,5 @@ class App extends Component {
 
 export default createContainer(() => {
     return {
-
     };
 }, App);
