@@ -1,5 +1,5 @@
 import NodeGeocoder from 'node-geocoder';
-import { Buildings } from '/imports/database/buildings';
+import { BuildingsAccessObject } from '/imports/database/buildings';
 import { Meteor } from 'meteor/meteor';
 
 const geocoder = NodeGeocoder(Meteor.settings.geocoderOptions);
@@ -55,15 +55,13 @@ function collectLatLons(geocodeResponse, buildings) {
  */
 function updateBuildingWithLatLon(newLat, newLon, id) {
     const newLatLonObject = {'latitude': newLat, 'longitude': newLon};
-    const validLatLon = Buildings.schema.newContext().validateOne(newLatLonObject, 'latitude') &&
-        Buildings.schema.newContext().validateOne(newLatLonObject, 'longitude');
 
-    if (!validLatLon) {
+    try {
+        BuildingsAccessObject.update(id, {
+            $set: newLatLonObject
+        });
+    } catch (error) {
         throw new Error("Invalid latitude or longitude");
     }
-
-    Buildings.update(id, {
-        $set: newLatLonObject
-    });
 }
 

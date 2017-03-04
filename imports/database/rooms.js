@@ -1,7 +1,9 @@
 import { Mongo } from 'meteor/mongo';
-import { RoomSlots } from './roomSlots';
+import { RoomSlotsAccessObject } from './roomSlots';
+import { DatabaseAccessObject } from './database-access-object';
 
-export const Rooms = new Mongo.Collection('rooms');
+
+const Rooms = new Mongo.Collection('rooms');
 
 Rooms.schema = new SimpleSchema({
     name: {type: String},
@@ -10,6 +12,8 @@ Rooms.schema = new SimpleSchema({
 
 Rooms.helpers({
     RoomSlots() {
-        return RoomSlots.find({room: this._id}).fetch();
+        return RoomSlotsAccessObject.find({room: this._id}).fetch();
     }
 });
+
+export const RoomsAccessObject = new DatabaseAccessObject(Rooms);
