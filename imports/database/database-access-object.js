@@ -17,13 +17,15 @@ export class DatabaseAccessObject {
     }
 
     update(id, object) {
+        const updateContext = this._collection.schema.namedContext("updateContext");
+
         let isValid = true;
         object.keys().forEach(function (key) {
-            isValid &= this._collection.schema.newContext().validateOne(object, key);
+            isValid &= updateContext.validateOne(object, key);
         });
 
         if (!isValid) {
-            throw new Error("Update object did not pass validation");
+            throw new Error("Update object did not pass validation: " + JSON.stringify(updateContext.invalidKeys()));
         }
 
         this._collection.update(id, {
