@@ -25,7 +25,7 @@ export class DatabaseAccessObject {
         });
 
         if (!isValid) {
-            throw new Error("Update object did not pass validation: " + JSON.stringify(updateContext.invalidKeys()));
+            throw new Error("Update object did not pass validation: " + updateContext.invalidKeys());
         }
 
         this._collection.update(id, {
