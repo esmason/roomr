@@ -31,7 +31,7 @@ export class DatabaseAccessObject {
         });
     }
 
-    remove() {
-        this._collection.remove({});
+    remove(queryObject) {
+        this._collection.remove(queryObject);
     }
 }
