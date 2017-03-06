@@ -13,6 +13,7 @@ export default class MyMap extends React.Component {
                 onReady={this.handleOnReady.bind(this)}
                 mapOptions={this.handleMapOptions}
                 userLocation={this.props.userLocation}
+                buildings = {this.props.buildings}
                 >
                 Loading!
             </GoogleMap>
@@ -29,7 +30,6 @@ export default class MyMap extends React.Component {
 
     handleOnReady(name) {
         GoogleMaps.ready(name, map => {
-            console.log(GoogleMaps.maps);
             map.instance["marker"] = null;
             map.instance["markers"] = [];
             google.maps.event.addListener(map.instance, "click", (event) => this.clickListener(event, map));

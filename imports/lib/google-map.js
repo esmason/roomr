@@ -5,7 +5,6 @@ import { Meteor } from 'meteor/meteor'
 import {Buildings} from '../database/buildings'
 import {Mongo} from 'meteor/mongo'
 
-availableBuildings = new Mongo.Collection('available-buildings')
 
 class GoogleMap extends React.Component {
 
@@ -22,9 +21,19 @@ class GoogleMap extends React.Component {
         this.handleMarkerRerender()
     }
 
+     componentWillReceiveProps(nextProps){ console.log(nextProps.buildings);}
+    //     if this.buildings_differ(this.props.buildings, nextProps.props.buildings);
+    // }
+    //
+    // //compare two arrays of building objects to see if they are the same
+    // buildings_differ()
+
     handleMarkerRerender(){
+        console.log(this.props.buildings);
         if (GoogleMaps.maps.hasOwnProperty(this.name)){
             this.clearMarkers(GoogleMaps.maps[this.name].instance.markers);
+            GoogleMaps.maps[this.name].instance.markers = [];
+
             for (let i = 0; i < this.props.buildings.length; i++) {
                 let marker = this.makeBuildingMarker(this.props.buildings[i]);
                 marker.setMap(GoogleMaps.maps[this.name].instance);
@@ -37,6 +46,9 @@ class GoogleMap extends React.Component {
     clearMarkers(markers){
         for (let i = 0; i < markers.length; i++){
           markers[i].setMap(null);
+        }
+        for (let i = markers.length - 1; i > -1; i--){
+          delete markers[i]
         }
     }
 
@@ -95,17 +107,8 @@ GoogleMap.propTypes = {
 
 GoogleMapContainer = createContainer(
     (props) => {
-        if (props.userLocation){
-            let subscription = Meteor.subscribe(
-                "buildings",
-                props.userLocation.lat(),
-                props.userLocation.lng(),
-            );
-        }
         return{
             loaded: GoogleMaps.loaded(),
-            buildings: (typeof availableBuildings.find({}).fetch()[0] !== "undefined")?
-             availableBuildings.find({}).fetch()[0].buildings : [],
         };
     },
     GoogleMap,
