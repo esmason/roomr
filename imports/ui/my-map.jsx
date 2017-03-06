@@ -14,14 +14,14 @@ export default class MyMap extends React.Component {
                 mapOptions={this.handleMapOptions}
                 userLocation={this.props.userLocation}
                 buildings = {this.props.buildings}
-                >
+            >
                 Loading!
             </GoogleMap>
         );
     }
 
     handleMapOptions() {
-        return( {
+        return({
             center: new google.maps.LatLng(49.2606, -123.2460),
             zoom: 16,
         });
@@ -39,14 +39,14 @@ export default class MyMap extends React.Component {
     }
 
     getDirections(map, start, dest){
-        var directionsService = new google.maps.DirectionsService();
-        var request = {
+        let directionsService = new google.maps.DirectionsService();
+        let request = {
             destination: start,
             origin: dest,
             travelMode: 'WALKING'
         };
 
-        var directionsDisplay = new google.maps.DirectionsRenderer({
+        let directionsDisplay = new google.maps.DirectionsRenderer({
             map: map.instance
         });
 

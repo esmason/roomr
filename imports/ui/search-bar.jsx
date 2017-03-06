@@ -25,14 +25,6 @@ export default class SearchBar extends Component{
         // Find the text field via the React ref
         const text1 = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
-        Times.find(
-            {}
-        ).fetch().map((time) => (Times.update({_id: time._id}, {$set :{show: false}}) ));
-
-        Times.find(
-            {text :{$regex: '.*'.concat(text1, ".*")} }
-        ).fetch().map((time) => (Times.update({_id: time._id}, {$set :{show: true}}) ));
-
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }

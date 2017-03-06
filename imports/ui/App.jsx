@@ -3,7 +3,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import SearchBar from './search-bar.jsx';
 import MyMap from './my-map.jsx';
 
-availableBuildings = new Mongo.Collection('available-buildings')
+availableBuildings = new Mongo.Collection('available-buildings');
 
 
 // App component - represents the whole app
@@ -14,32 +14,32 @@ class App extends Component {
             userLocation: null,
             buildings : [],
             subscription: null,
-        }
+        };
         this.handleMapClick = this.handleMapClick.bind(this);
     }
 
     handleMapClick(event) {
-        if (this.state.subscription!=null){
-          this.state.subscription.stop();
-      }
-            this.setState({
-                userLocation: event.latLng,
-                subscription: Meteor.subscribe(
-                        "buildings",
-                        event.latLng.lat(),
-                        event.latLng.lng(),
-                        () => this.setState({
-                            buildings:(typeof availableBuildings.find({}).fetch()[0] !== "undefined")?
-                                availableBuildings.find({}).fetch()[0].buildings : [],
-                            }),
-                    ),
-            });
-
+        if (this.state.subscription!=null) {
+            this.state.subscription.stop();
         }
+        this.setState({
+            userLocation: event.latLng,
+            subscription: Meteor.subscribe(
+                "buildings",
+                event.latLng.lat(),
+                event.latLng.lng(),
+                () => this.setState({
+                    buildings:(typeof availableBuildings.find({}).fetch()[0] !== "undefined")?
+                        availableBuildings.find({}).fetch()[0].buildings : [],
+                }),
+            ),
+        });
+
+    }
 
 
     getUserLoc(){
-        if (this.state.userLocation){
+        if (this.state.userLocation) {
             return "Lat: ".concat(this.state.userLocation.lat(), " Lng: ",this.state.userLocation.lng());
         }
         else {
@@ -55,8 +55,8 @@ class App extends Component {
                     <SearchBar placeholder = "search for data"/>
                 </header>
                 <MyMap onMapClick = {this.handleMapClick}
-                    userLocation={this.state.userLocation}
-                    buildings = {this.state.buildings}
+                       userLocation={this.state.userLocation}
+                       buildings = {this.state.buildings}
                 />
             </div>
         );
@@ -64,5 +64,5 @@ class App extends Component {
 }
 
 export default createContainer(() => {
-return{};
+    return{};
 }, App);
