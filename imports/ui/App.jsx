@@ -8,6 +8,7 @@ availableBuildings = new Mongo.Collection('available-buildings');
 
 // App component - represents the whole app
 class App extends Component {
+
     constructor(props){
         super(props);
         this.state = {
@@ -34,11 +35,10 @@ class App extends Component {
                 }),
             ),
         });
-
     }
 
 
-    getUserLoc(){
+    getUserLocation(){
         if (this.state.userLocation) {
             return "Lat: ".concat(this.state.userLocation.lat(), " Lng: ",this.state.userLocation.lng());
         }
@@ -51,7 +51,7 @@ class App extends Component {
         return (
             <div className="container">
                 <header>
-                    <h1>{this.getUserLoc()}</h1>
+                    <h1>{this.getUserLocation()}</h1>
                     <SearchBar placeholder = "search for data"/>
                 </header>
                 <MyMap onMapClick = {this.handleMapClick}
