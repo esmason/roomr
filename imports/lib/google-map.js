@@ -31,48 +31,49 @@ class GoogleMap extends React.Component {
 
     componentWillUnmount() {
         if (GoogleMaps.maps[this.name]) {
-          google.maps.event.clearInstanceListeners(
-              GoogleMaps.maps[this.name].instance,
-          );
-          delete GoogleMaps.maps[this.name];
+            google.maps.event.clearInstanceListeners(
+                GoogleMaps.maps[this.name].instance,
+            );
+            delete GoogleMaps.maps[this.name];
         }
     }
 
     render() {
         return (
-          <div className="map-container" ref={c => (this.container = c)}>
-            {this.props.children}
-            <div>{this.renderUserLocation()}</div>
-          <div>{this.renderBuildingMarkers()}</div>
-          </div>
+            <div className="map-container" ref={c => (this.container = c)}>
+                {this.props.children}
+                <div>{this.renderUserLocation()}</div>
+                <div>{this.renderBuildingMarkers()}</div>
+            </div>
         );
-        }
+    }
 
     renderUserLocation(){
-        if (this.props.userLocation!=null){
-            return(<Marker key={Random.id()} marker = {this.initMarker(this.props.userLocation)} map = {GoogleMaps.maps[this.name].instance}></Marker>)
+        if (this.props.userLocation!=null) {
+            return(<Marker key={Random.id()}
+                           marker = {this.initMarker(this.props.userLocation)}
+                           map = {GoogleMaps.maps[this.name].instance}>
+            </Marker>)
         }
-        }
+    }
 
     renderBuildingMarkers() {
         return this.props.buildings.map((building) =>(
             <Marker key = {Random.id()}
-                 marker = {this.initMarker(
-                     {
-                     lat:building.latitude,
-                     lng: building.longitude,
-                    }
-                 )}
-                 map = {GoogleMaps.maps[this.name].instance}></Marker>
+                    marker = {this.initMarker({
+                            lat:building.latitude,
+                            lng: building.longitude,
+                        }
+                    )}
+                    map = {GoogleMaps.maps[this.name].instance}></Marker>
         ));
     }
 
     initMarker(position){
-        let marker = new google.maps.Marker({
-                position: position
-            })
-            return marker
-        }
+        return new google.maps.Marker({
+            position: position
+        })
+    }
 }
 
 GoogleMap.propTypes = {

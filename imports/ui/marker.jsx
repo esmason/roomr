@@ -10,6 +10,8 @@ export default class Marker extends React.Component {
         this.props.marker.setMap(null);
     }
 
-    render(){return null;}
+    render(){
+        return null;
+    }
 
 }
