@@ -20,7 +20,6 @@ export default class MyMap extends React.Component {
         );
     }
 
-
     handleMapOptions() {
         return( {
             center: new google.maps.LatLng(49.2606, -123.2460),
@@ -30,7 +29,7 @@ export default class MyMap extends React.Component {
 
     handleOnReady(name) {
         GoogleMaps.ready(name, map => {
-            map.instance["marker"] = null;
+            map.instance["user_marker"] = null;
             map.instance["markers"] = [];
             google.maps.event.addListener(map.instance, "click", (event) => this.clickListener(event, map));
             //  getDirections(map, "Life sciences centre, UBC, Vancouver", "ICICS, UBC, Vancouver");
@@ -38,12 +37,11 @@ export default class MyMap extends React.Component {
     }
 
     clickListener(event, map) {
-        if(map.instance.marker){
-            map.instance.marker.setMap(null)
+        if(map.instance.user_marker != null){
+            map.instance.user_marker.setMap(null)
         }
-        const latLng = event.latLng;
-        map.instance.marker = new google.maps.Marker({
-            position: latLng,
+        map.instance.user_marker = new google.maps.Marker({
+            position: event.latLng,
             map: map.instance,
         });
         this.props.onMapClick(event);
@@ -54,7 +52,7 @@ export default class MyMap extends React.Component {
         var request = {
             destination: start,
             origin: dest,
-            travelMode: 'DRIVING'
+            travelMode: 'WALKING'
         };
 
         var directionsDisplay = new google.maps.DirectionsRenderer({
