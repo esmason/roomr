@@ -42,32 +42,38 @@ class GoogleMap extends React.Component {
         return (
           <div className="map-container" ref={c => (this.container = c)}>
             {this.props.children}
-          <div>{this.renderMarkers()}</div>
+            <div>{this.renderUserLocation()}</div>
+          <div>{this.renderBuildingMarkers()}</div>
           </div>
         );
         }
 
-    renderMarkers() {
+    renderUserLocation(){
+        if (this.props.userLocation!=null){
+            return(<Marker key={Random.id()} marker = {this.initMarker(this.props.userLocation)} map = {GoogleMaps.maps[this.name].instance}></Marker>)
+        }
+        }
+
+    renderBuildingMarkers() {
         return this.props.buildings.map((building) =>(
             <Marker key = {Random.id()}
-                 marker = {this.initBuildingMarker(
-                     building.latitude,
-                     building.longitude,
+                 marker = {this.initMarker(
+                     {
+                     lat:building.latitude,
+                     lng: building.longitude,
+                    }
                  )}
                  map = {GoogleMaps.maps[this.name].instance}></Marker>
         ));
     }
 
-    initBuildingMarker(lat, lng){
-        let position = {lat: lat, lng:lng};
+    initMarker(position){
         let marker = new google.maps.Marker({
                 position: position
             })
             return marker
         }
 }
-
-
 
 GoogleMap.propTypes = {
     loaded: PropTypes.bool.isRequired,
