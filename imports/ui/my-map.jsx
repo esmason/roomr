@@ -2,9 +2,9 @@ import React from 'react';
 import GoogleMap from '../lib/google-map';
 
 export default class MyMap extends React.Component {
+    
     constructor(props){
         super(props);
-        this.clickListener = this.clickListener.bind(this);
     }
 
     render() {
@@ -29,13 +29,9 @@ export default class MyMap extends React.Component {
 
     handleOnReady(name) {
         GoogleMaps.ready(name, map => {
-            google.maps.event.addListener(map.instance, "click", (event) => this.clickListener(event, map));
+            google.maps.event.addListener(map.instance, "click", (event) => this.props.onMapClick(event));
             //  getDirections(map, "Life sciences centre, UBC, Vancouver", "ICICS, UBC, Vancouver");
         });
-    }
-
-    clickListener(event, map) {
-        this.props.onMapClick(event);
     }
 
     getDirections(map, start, dest){

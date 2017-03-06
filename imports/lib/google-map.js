@@ -6,7 +6,7 @@ import Marker from '../ui/marker'
 
 
 class GoogleMap extends React.Component {
-
+    
     constructor(props) {
         super(props);
     }

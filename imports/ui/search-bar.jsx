@@ -5,6 +5,7 @@ import MyMap from './my-map.jsx';
 
 
 export default class SearchBar extends Component{
+    
     render(){
         return(
             <div>
@@ -28,5 +29,4 @@ export default class SearchBar extends Component{
         // Clear form
         ReactDOM.findDOMNode(this.refs.textInput).value = '';
     }
-
 }

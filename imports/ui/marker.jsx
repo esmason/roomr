@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
 export default class Marker extends React.Component {
-
+    
     componentDidMount() {
         this.props.marker.setMap(this.props.map);
     }
@@ -13,5 +13,4 @@ export default class Marker extends React.Component {
     render(){
         return null;
     }
-
 }
