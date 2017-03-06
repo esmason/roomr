@@ -30,7 +30,7 @@ if (Meteor.isServer) {
             console.log("got buildings");
             var self = this;
             var buildings = getClosestAvailableBuildings(
-                1,
+                4,
                 lat,
                 lng,
                 '16:00',
