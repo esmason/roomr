@@ -20,6 +20,8 @@ export default class MyMap extends React.Component {
         );
     }
 
+
+
     handleMapOptions() {
         return( {
             center: new google.maps.LatLng(49.2606, -123.2460),
