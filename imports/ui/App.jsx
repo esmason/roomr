@@ -22,7 +22,6 @@ class App extends Component {
         if (this.state.subscription!=null){
           this.state.subscription.stop();
       }
-            console.log(this.state.subscription)
             this.setState({
                 userLocation: event.latLng,
                 subscription: Meteor.subscribe(
@@ -35,9 +34,6 @@ class App extends Component {
                             }),
                     ),
             });
-            console.log(this.state.subscription)
-
-            console.log(this.state.buildings);
 
         }
 

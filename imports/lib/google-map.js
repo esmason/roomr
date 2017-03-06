@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
-import {Buildings} from '../database/buildings'
-import {Mongo} from 'meteor/mongo'
 
 
 class GoogleMap extends React.Component {
@@ -21,15 +19,8 @@ class GoogleMap extends React.Component {
         this.handleMarkerRerender()
     }
 
-     componentWillReceiveProps(nextProps){ console.log(nextProps.buildings);}
-    //     if this.buildings_differ(this.props.buildings, nextProps.props.buildings);
-    // }
-    //
-    // //compare two arrays of building objects to see if they are the same
-    // buildings_differ()
 
     handleMarkerRerender(){
-        console.log(this.props.buildings);
         if (GoogleMaps.maps.hasOwnProperty(this.name)){
             this.clearMarkers(GoogleMaps.maps[this.name].instance.markers);
             GoogleMaps.maps[this.name].instance.markers = [];
