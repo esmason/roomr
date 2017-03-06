@@ -20,8 +20,6 @@ export default class MyMap extends React.Component {
         );
     }
 
-
-
     handleMapOptions() {
         return( {
             center: new google.maps.LatLng(49.2606, -123.2460),
@@ -31,21 +29,12 @@ export default class MyMap extends React.Component {
 
     handleOnReady(name) {
         GoogleMaps.ready(name, map => {
-            map.instance["user_marker"] = null;
-            map.instance["markers"] = [];
             google.maps.event.addListener(map.instance, "click", (event) => this.clickListener(event, map));
             //  getDirections(map, "Life sciences centre, UBC, Vancouver", "ICICS, UBC, Vancouver");
         });
     }
 
     clickListener(event, map) {
-        if(map.instance.user_marker != null){
-            map.instance.user_marker.setMap(null)
-        }
-        map.instance.user_marker = new google.maps.Marker({
-            position: event.latLng,
-            map: map.instance,
-        });
         this.props.onMapClick(event);
     }
 

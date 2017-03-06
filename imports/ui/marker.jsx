@@ -1,7 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-
-
 export default class Marker extends React.Component {
 
     componentDidMount() {
