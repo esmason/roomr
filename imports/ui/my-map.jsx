@@ -2,7 +2,7 @@ import React from 'react';
 import GoogleMap from '../lib/google-map';
 
 export default class MyMap extends React.Component {
-    
+
     constructor(props){
         super(props);
     }
@@ -10,9 +10,9 @@ export default class MyMap extends React.Component {
     render() {
         return (
             <GoogleMap
-                onReady={this.handleOnReady.bind(this)}
-                mapOptions={this.handleMapOptions}
-                userLocation={this.props.userLocation}
+                onReady = {this.handleOnReady.bind(this)}
+                mapOptions = {this.handleMapOptions}
+                userLocation = {this.props.userLocation}
                 buildings = {this.props.buildings}
             >
                 Loading!
@@ -34,7 +34,7 @@ export default class MyMap extends React.Component {
         });
     }
 
-    getDirections(map, start, dest){
+    getDirections(map, start, dest) {
         let directionsService = new google.maps.DirectionsService();
         let request = {
             destination: start,
