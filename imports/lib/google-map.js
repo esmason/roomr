@@ -61,7 +61,7 @@ class GoogleMap extends React.Component {
         return this.props.buildings.map((building) =>(
             <Marker key = {Random.id()}
                     marker = {this.initMarker({
-                            lat:building.latitude,
+                            lat: building.latitude,
                             lng: building.longitude,
                         }
                     )}
