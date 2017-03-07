@@ -20,7 +20,7 @@ class App extends Component {
     }
 
     handleMapClick(event) {
-        if (!this.state.subscription) {
+        if (this.state.subscription) {
             this.state.subscription.stop();
         }
         this.setState({
