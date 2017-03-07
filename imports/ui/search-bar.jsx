@@ -5,15 +5,15 @@ import MyMap from './my-map.jsx';
 
 
 export default class SearchBar extends Component{
-    
-    render(){
+
+    render() {
         return(
             <div>
-                <form className="search-db" onSubmit={this.handleSubmit.bind(this)} >
+                <form className = "search-db" onSubmit = {this.handleSubmit.bind(this)} >
                     <input
-                        type="text"
-                        ref="textInput"
-                        placeholder={this.props.placeholder}
+                        type = "text"
+                        ref = "textInput"
+                        placeholder = {this.props.placeholder}
                     />
                 </form>
             </div>

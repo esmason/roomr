@@ -6,7 +6,7 @@ import Marker from '../ui/marker'
 
 
 class GoogleMap extends React.Component {
-    
+
     constructor(props) {
         super(props);
     }
@@ -40,7 +40,7 @@ class GoogleMap extends React.Component {
 
     render() {
         return (
-            <div className="map-container" ref={c => (this.container = c)}>
+            <div className = "map-container" ref = {c => (this.container = c)}>
                 {this.props.children}
                 <div>{this.renderUserLocation()}</div>
                 <div>{this.renderBuildingMarkers()}</div>
@@ -50,7 +50,7 @@ class GoogleMap extends React.Component {
 
     renderUserLocation(){
         if (this.props.userLocation!=null) {
-            return(<Marker key={Random.id()}
+            return(<Marker key = {Random.id()}
                            marker = {this.initMarker(this.props.userLocation)}
                            map = {GoogleMaps.maps[this.name].instance}>
             </Marker>)
