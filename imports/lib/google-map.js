@@ -20,9 +20,9 @@ class GoogleMap extends React.Component {
         if (this.props.loaded) {
             this.name = Random.id();
             GoogleMaps.create({
-                name : this.name,
-                element : this.container,
-                options : this.props.mapOptions(),
+                name: this.name,
+                element: this.container,
+                options: this.props.mapOptions(),
             });
             this.props.onReady(this.name);
             clearInterval(this.timer);
