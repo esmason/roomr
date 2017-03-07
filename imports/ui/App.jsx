@@ -5,7 +5,6 @@ import MyMap from './my-map.jsx';
 
 availableBuildings = new Mongo.Collection('available-buildings');
 
-
 // App component - represents the whole app
 class App extends Component {
 
