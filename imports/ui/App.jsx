@@ -12,9 +12,9 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userLocation : null,
-            buildings : [],
-            subscription : null,
+            userLocation: null,
+            buildings: [],
+            subscription: null,
         };
         this.handleMapClick = this.handleMapClick.bind(this);
     }
@@ -30,13 +30,12 @@ class App extends Component {
                 event.latLng.lat(),
                 event.latLng.lng(),
                 () => this.setState({
-                    buildings:(typeof availableBuildings.find({}).fetch()[0] !== "undefined")?
+                    buildings: (typeof availableBuildings.find({}).fetch()[0] !== "undefined") ?
                         availableBuildings.find({}).fetch()[0].buildings : [],
                 }),
             ),
         });
     }
-
 
     getUserLocation() {
         if (this.state.userLocation) {
@@ -55,7 +54,7 @@ class App extends Component {
                     <SearchBar placeholder = "search for data"/>
                 </header>
                 <MyMap onMapClick = {this.handleMapClick}
-                       userLocation={this.state.userLocation}
+                       userLocation = {this.state.userLocation}
                        buildings = {this.state.buildings}
                 />
             </div>
