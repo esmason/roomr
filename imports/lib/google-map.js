@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
-import Marker from '../ui/marker'
+import Marker from '../ui/marker.jsx'
 
 
 class GoogleMap extends React.Component {
