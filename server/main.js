@@ -27,7 +27,6 @@ if (Meteor.isServer) {
     Meteor.publish(
         'buildings',
         function buildingsPublication(lat, lng) {
-            console.log("got buildings");
             var self = this;
             var buildings = getClosestAvailableBuildings(
                 4,

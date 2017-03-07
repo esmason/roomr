@@ -12,9 +12,9 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userLocation: null,
+            userLocation : null,
             buildings : [],
-            subscription: null,
+            subscription : null,
         };
         this.handleMapClick = this.handleMapClick.bind(this);
     }
