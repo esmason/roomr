@@ -16,13 +16,13 @@ class GoogleMap extends React.Component {
         this.timer = setInterval( () => this.createMap(), 100);
     }
 
-    createMap(){
+    createMap() {
         if (this.props.loaded) {
             this.name = Random.id();
             GoogleMaps.create({
-                name: this.name,
-                element: this.container,
-                options: this.props.mapOptions(),
+                name : this.name,
+                element : this.container,
+                options : this.props.mapOptions(),
             });
             this.props.onReady(this.name);
             clearInterval(this.timer);
@@ -48,7 +48,7 @@ class GoogleMap extends React.Component {
         );
     }
 
-    renderUserLocation(){
+    renderUserLocation() {
         if (this.props.userLocation!=null) {
             return(<Marker key = {Random.id()}
                            marker = {this.initMarker(this.props.userLocation)}
@@ -69,7 +69,7 @@ class GoogleMap extends React.Component {
         ));
     }
 
-    initMarker(position){
+    initMarker(position) {
         return new google.maps.Marker({
             position: position
         })

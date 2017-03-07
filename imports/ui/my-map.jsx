@@ -30,7 +30,6 @@ export default class MyMap extends React.Component {
     handleOnReady(name) {
         GoogleMaps.ready(name, map => {
             google.maps.event.addListener(map.instance, "click", (event) => this.props.onMapClick(event));
-            //  getDirections(map, "Life sciences centre, UBC, Vancouver", "ICICS, UBC, Vancouver");
         });
     }
 
