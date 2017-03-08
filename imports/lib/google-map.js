@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
-import Marker from '../ui/marker.jsx'
-
+import BuildingMarker from '../ui/building-marker.jsx'
+import UserMarker from '../ui/user-marker.jsx'
 
 class GoogleMap extends React.Component {
 
@@ -50,22 +50,26 @@ class GoogleMap extends React.Component {
 
     renderUserLocation() {
         if (this.props.userLocation!=null) {
-            return(<Marker key = {Random.id()}
+            return(<UserMarker key = {Random.id()}
                            marker = {this.initMarker(this.props.userLocation)}
                            map = {GoogleMaps.maps[this.name].instance}>
-            </Marker>)
+            </UserMarker>)
         }
     }
 
     renderBuildingMarkers() {
+        console.log(this.props.buildings);
         return this.props.buildings.map((building) =>(
-            <Marker key = {Random.id()}
+            <BuildingMarker key = {Random.id()}
                     marker = {this.initMarker({
                             lat: building.latitude,
                             lng: building.longitude,
                         }
                     )}
-                    map = {GoogleMaps.maps[this.name].instance}></Marker>
+                    map = {GoogleMaps.maps[this.name].instance}
+                    name = {building.name}
+                    rooms = {building.availableRooms}>
+            </BuildingMarker>
         ));
     }
 
