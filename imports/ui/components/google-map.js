@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react';
 import { Random } from 'meteor/random';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor'
-import BuildingMarker from '../ui/building-marker.jsx'
-import UserMarker from '../ui/user-marker.jsx'
+import BuildingMarker from '../containers/building-marker.jsx'
+import UserMarker from '../containers/user-marker.jsx'
+import {availableBuildings} from '../../minimongo/available-buildings.js'
 
 class GoogleMap extends React.Component {
 
@@ -17,16 +18,32 @@ class GoogleMap extends React.Component {
     }
 
     createMap() {
-        if (this.props.loaded) {
+        if (GoogleMaps.loaded()) {
             this.name = Random.id();
             GoogleMaps.create({
                 name: this.name,
                 element: this.container,
                 options: this.props.mapOptions(),
             });
-            this.props.onReady(this.name);
+            GoogleMaps.ready(this.name, map => {
+                google.maps.event.addListener(
+                    map.instance,
+                    "click",
+                    (event) => this.onMapClick(event),
+                );
+            });
             clearInterval(this.timer);
         }
+    }
+
+    onMapClick(event) {
+        this.props.onClick(event);
+        Meteor.subscribe(
+            "buildings",
+            event.latLng.lat(),
+            event.latLng.lng(),
+            () => this.props.onSubscribed(event),
+        )
     }
 
     componentWillUnmount() {
@@ -48,18 +65,20 @@ class GoogleMap extends React.Component {
         );
     }
 
+
     renderUserLocation() {
         if (this.props.userLocation!=null) {
-            return(<UserMarker key = {Random.id()}
+            return(
+                <UserMarker key = {Random.id()}
                            marker = {this.initMarker(this.props.userLocation)}
                            map = {GoogleMaps.maps[this.name].instance}>
-            </UserMarker>)
+                       </UserMarker>)
         }
     }
 
     renderBuildingMarkers() {
-        console.log(this.props.buildings);
-        return this.props.buildings.map((building) =>(
+        if (this.props.displayNearestBuilding){
+           return availableBuildings.find({}).fetch()[0].buildings.map((building) =>(
             <BuildingMarker key = {Random.id()}
                     marker = {this.initMarker({
                             lat: building.latitude,
@@ -72,6 +91,7 @@ class GoogleMap extends React.Component {
             </BuildingMarker>
         ));
     }
+}
 
     initMarker(position) {
         return new google.maps.Marker({
@@ -81,21 +101,12 @@ class GoogleMap extends React.Component {
 }
 
 GoogleMap.propTypes = {
-    loaded: PropTypes.bool.isRequired,
-    onReady: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired,
     options: PropTypes.object,
     mapOptions: PropTypes.func.isRequired,
     children: PropTypes.node,
-    buildings: PropTypes.array,
 };
 
-GoogleMapContainer = createContainer(
-    (props) => {
-        return{
-            loaded: GoogleMaps.loaded(),
-        };
-    },
-    GoogleMap,
-);
 
-export default GoogleMapContainer;
+
+export default GoogleMap;

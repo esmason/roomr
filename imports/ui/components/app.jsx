@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import SearchBar from './search-bar.jsx';
-import MyMap from './my-map.jsx';
-
-availableBuildings = new Mongo.Collection('available-buildings');
+import MyMap from '../containers/my-map.jsx';
+import {availableBuildings} from '../../minimongo/available-buildings.js'
 
 // App component - represents the whole app
 class App extends Component {
@@ -12,7 +11,7 @@ class App extends Component {
         super(props);
         this.state = {
             userLocation: null,
-            buildings: [],
+            buildings: false,
             subscription: null,
         };
         this.handleMapClick = this.handleMapClick.bind(this);
@@ -29,8 +28,7 @@ class App extends Component {
                 event.latLng.lat(),
                 event.latLng.lng(),
                 () => this.setState({
-                    buildings: (typeof availableBuildings.find({}).fetch()[0] !== "undefined") ?
-                        availableBuildings.find({}).fetch()[0].buildings : [],
+                    buildings: true
                 }),
             ),
         });

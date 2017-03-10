@@ -1,0 +1,6 @@
+{
+    userLocation: null,
+    displayNearestBuildings: false,
+    isSubscribed: false,
+    infoWindowBuilding: null,
+}

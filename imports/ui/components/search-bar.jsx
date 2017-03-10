@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import ReactDOM from 'react-dom';
-import MyMap from './my-map.jsx';
+import MyMap from '../containers/my-map.jsx';
 
 
 export default class SearchBar extends Component{

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Marker from '../ui/marker.jsx'
+import Marker from '../components/marker.jsx'
 
 export default class UserMarker extends React.Component{
 
