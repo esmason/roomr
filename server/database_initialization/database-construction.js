@@ -27,10 +27,11 @@ import { RoomSlotsAccessObject } from '/server/database/roomSlots';
     "address": "1866 Main Mall"
    }
  */
-export function persistScraperRoomSlots(roomSlots) {
+
+export function persistScraperRoomSlots(roomSlots, buildings) {
     const createdBuildings = [];
     roomSlots.forEach(function (roomSlot) {
-        let building = getOrCreateBuilding(roomSlot, createdBuildings); // mutates createdBuildings
+        let building = getOrCreateBuilding(roomSlot, buildings, createdBuildings); // mutates createdBuildings
         let room = getOrCreateRoom(roomSlot, building);
         createRoomSlot(roomSlot, building, room);
     });
@@ -41,14 +42,15 @@ export function persistScraperRoomSlots(roomSlots) {
 /**
  * Takes a roomSlot and gets the relevant building from the createdBuildings collection, or adds it if it didn't exist.
  */
-function getOrCreateBuilding(roomSlot, createdBuildings) {
+function getOrCreateBuilding(roomSlot, buildings, createdBuildings) {
     let building = BuildingsAccessObject.findOne({name: roomSlot['building']});
     if (typeof building === 'undefined') {
         let newBuilding = {
             name: roomSlot['building'],
             address: roomSlot['address'],
             latitude: 0, //set later on as a batch call to google API
-            longitude: 0 //set later on as a batch call to google API
+            longitude: 0, //set later on as a batch call to google API
+            hours: getBuildingHours(buildings, roomSlot['address'])
         };
         BuildingsAccessObject.insert(newBuilding);
         building = BuildingsAccessObject.findOne({name: roomSlot['building']});
@@ -86,4 +88,18 @@ function createRoomSlot(roomSlot, building, room) {
         occupier: roomSlot['sectionID']
     };
     RoomSlotsAccessObject.insert(newRoomSlot);
+}
+
+/**
+ * Checks to see if we have the hours for a building with a given address, and returns them, otherwise returns an empty string for hours.
+ */
+function getBuildingHours(buildings, address) {
+    let hours = "";
+    buildings.forEach(function (building) {
+            if (building['address'] == address) {
+                hours = building['hours'];
+            }
+        }
+    );
+    return hours;
 }

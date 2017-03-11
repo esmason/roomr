@@ -13,7 +13,8 @@ Meteor.methods({
         RoomsAccessObject.remove({});
         BuildingsAccessObject.remove({});
         const roomSlotsJSON = JSON.parse(Assets.getText('room-slots.json'));
-        persistScraperRoomSlots(roomSlotsJSON);
+        const buildingsJSON = JSON.parse(Assets.getText('buildings.json'));
+        persistScraperRoomSlots(roomSlotsJSON, buildingsJSON);
     },
 
     /**
