@@ -1,4 +1,4 @@
-import { Buildings } from '/imports/database/buildings';
+import { BuildingsAccessObject } from '/server/database/buildings';
 import { getDistanceFromLatLonInKm } from '../utilities/distance-utils';
 import { mongoToLocalTime, stringToLocalTime } from '../utilities/date-time-utils';
 
@@ -8,7 +8,7 @@ import { mongoToLocalTime, stringToLocalTime } from '../utilities/date-time-util
  */
 export function getClosestAvailableBuildings(numBuildings, lat, lon, time, day) {
     const availableBuildingsArray = [];
-    Buildings.find({}).forEach(function (building) {
+    BuildingsAccessObject.find({}).forEach(function (building) {
         let availableRooms = getAvailableRooms(building,time, day);
         if (availableRooms.length > 0) {
             availableBuildingsArray.push(getFrontEndBuildingObject(building, availableRooms));
