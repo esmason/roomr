@@ -1,6 +1,6 @@
-import { Buildings } from '/imports/database/buildings';
-import { Rooms } from '/imports/database/rooms';
-import { RoomSlots } from '/imports/database/roomSlots';
+import { BuildingsAccessObject } from '/server/database/buildings';
+import { RoomsAccessObject } from '/server/database/rooms';
+import { RoomSlotsAccessObject } from '/server/database/roomSlots';
 import { persistScraperRoomSlots } from './database_initialization/database-construction';
 import { getClosestAvailableBuildings } from './database_access/retrieve-buildings.js';
 
@@ -9,9 +9,9 @@ Meteor.methods({
      * Populates the Rooms collection with database scraped from ubc.ca. The scraped data is stored in room-slots.json
      */
     'populateDatabase': function () {
-        RoomSlots.remove({});
-        Rooms.remove({});
-        Buildings.remove({});
+        RoomSlotsAccessObject.remove({});
+        RoomsAccessObject.remove({});
+        BuildingsAccessObject.remove({});
         const roomSlotsJSON = JSON.parse(Assets.getText('room-slots.json'));
         persistScraperRoomSlots(roomSlotsJSON);
     },
