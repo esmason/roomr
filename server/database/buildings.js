@@ -8,7 +8,8 @@ Buildings.schema = new SimpleSchema({
     name: {type: String},
     address: {type: String},
     latitude: {type: Number, min: -90, max: 90, decimal: true},
-    longitude: {type: Number, min: -180, max: 180, decimal: true}
+    longitude: {type: Number, min: -180, max: 180, decimal: true},
+    hours: {type: String}
 });
 
 Buildings.helpers({
