@@ -1,4 +1,4 @@
-dd this file to your meteor package as `.travis.yml`
+#add this file to your meteor package as `.travis.yml`
 
 sudo: required
 language: node_js
