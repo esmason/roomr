@@ -3,24 +3,41 @@ import { createContainer } from 'meteor/react-meteor-data';
 import SearchBar from './search-bar.jsx';
 import MyMap from './my-map.jsx';
 
+availableBuildings = new Mongo.Collection('available-buildings');
+
 // App component - represents the whole app
 class App extends Component {
-    constructor(props){
+
+    constructor(props) {
         super(props);
         this.state = {
-            userLocation: null
+            userLocation: null,
+            buildings: [],
+            subscription: null,
         };
         this.handleMapClick = this.handleMapClick.bind(this);
     }
 
     handleMapClick(event) {
+        if (this.state.subscription) {
+            this.state.subscription.stop();
+        }
         this.setState({
-            userLocation: event.latLng
+            userLocation: event.latLng,
+            subscription: Meteor.subscribe(
+                "buildings",
+                event.latLng.lat(),
+                event.latLng.lng(),
+                () => this.setState({
+                    buildings: (typeof availableBuildings.find({}).fetch()[0] !== "undefined") ?
+                        availableBuildings.find({}).fetch()[0].buildings : [],
+                }),
+            ),
         });
     }
 
-    getUserLoc(){
-        if (this.state.userLocation){
+    getUserLocation() {
+        if (this.state.userLocation) {
             return "Lat: ".concat(this.state.userLocation.lat(), " Lng: ",this.state.userLocation.lng());
         }
         else {
@@ -30,19 +47,20 @@ class App extends Component {
 
     render() {
         return (
-            <div className="container">
+            <div className = "container">
                 <header>
-                    <h1>{this.getUserLoc()}</h1>
+                    <h1>{this.getUserLocation()}</h1>
                     <SearchBar placeholder = "search for data"/>
                 </header>
-                <MyMap onMapClick = {this.handleMapClick}/>
+                <MyMap onMapClick = {this.handleMapClick}
+                       userLocation = {this.state.userLocation}
+                       buildings = {this.state.buildings}
+                />
             </div>
         );
     }
 }
 
 export default createContainer(() => {
-    return {
-
-    };
+    return{};
 }, App);

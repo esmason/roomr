@@ -8,7 +8,6 @@ import { mongoToLocalTime, stringToLocalTime } from '../utilities/date-time-util
  */
 export function getClosestAvailableBuildings(numBuildings, lat, lon, time, day) {
     const availableBuildingsArray = [];
-
     BuildingsAccessObject.find({}).forEach(function (building) {
         let availableRooms = getAvailableRooms(building,time, day);
         if (availableRooms.length > 0) {

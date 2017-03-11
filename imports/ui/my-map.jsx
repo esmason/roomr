@@ -2,21 +2,26 @@ import React from 'react';
 import GoogleMap from '../lib/google-map';
 
 export default class MyMap extends React.Component {
+
     constructor(props){
         super(props);
-        this.clickListener = this.clickListener.bind(this);
     }
 
     render() {
         return (
-            <GoogleMap onReady={this.handleOnReady.bind(this)} mapOptions={this.handleMapOptions}>
+            <GoogleMap
+                onReady = {this.handleOnReady.bind(this)}
+                mapOptions = {this.handleMapOptions}
+                userLocation = {this.props.userLocation}
+                buildings = {this.props.buildings}
+            >
                 Loading!
             </GoogleMap>
         );
     }
 
     handleMapOptions() {
-        return( {
+        return({
             center: new google.maps.LatLng(49.2606, -123.2460),
             zoom: 16,
         });
@@ -24,33 +29,19 @@ export default class MyMap extends React.Component {
 
     handleOnReady(name) {
         GoogleMaps.ready(name, map => {
-            map.instance["marker"] = null;
-            google.maps.event.addListener(map.instance, "click", (event) => this.clickListener(event, map));
-            //  getDirections(map, "Life sciences centre, UBC, Vancouver", "ICICS, UBC, Vancouver");
+            google.maps.event.addListener(map.instance, "click", (event) => this.props.onMapClick(event));
         });
     }
 
-    clickListener(event, map) {
-        if(map.instance.marker){
-            map.instance.marker.setMap(null)
-        }
-        const latLng = event.latLng;
-        map.instance.marker = new google.maps.Marker({
-            position: latLng,
-            map: map.instance,
-        });
-        this.props.onMapClick(event);
-    }
-
-    getDirections(map, start, dest){
-        var directionsService = new google.maps.DirectionsService();
-        var request = {
+    getDirections(map, start, dest) {
+        let directionsService = new google.maps.DirectionsService();
+        let request = {
             destination: start,
             origin: dest,
-            travelMode: 'DRIVING'
+            travelMode: 'WALKING'
         };
 
-        var directionsDisplay = new google.maps.DirectionsRenderer({
+        let directionsDisplay = new google.maps.DirectionsRenderer({
             map: map.instance
         });
 

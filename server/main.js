@@ -22,3 +22,21 @@ Meteor.methods({
      */
     'getClosestAvailableBuildings': getClosestAvailableBuildings
 });
+
+if (Meteor.isServer) {
+    Meteor.publish(
+        'buildings',
+        function buildingsPublication(lat, lng) {
+            var self = this;
+            var buildings = getClosestAvailableBuildings(
+                4,
+                lat,
+                lng,
+                '16:00',
+                2,
+            )
+            self.added('available-buildings', "test", {buildings: buildings})
+            self.ready()
+    },
+    );
+}
