@@ -1,8 +1,8 @@
 import { geocodeBuildings } from './geocoder';
 import { convertDayToIndex, stringToLocalTime } from '/server/utilities/date-time-utils';
-import { BuildingsAccessObject } from '/imports/database/buildings';
-import { RoomsAccessObject } from '/imports/database/rooms';
-import { RoomSlotsAccessObject } from '/imports/database/roomSlots';
+import { BuildingsAccessObject } from '/server/database/buildings';
+import { RoomsAccessObject } from '/server/database/rooms';
+import { RoomSlotsAccessObject } from '/server/database/roomSlots';
 
 /**
  * Transforms room slots into useful database objects by populating the createdBuildings, rooms, and roomslots collections

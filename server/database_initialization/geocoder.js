@@ -1,5 +1,5 @@
 import NodeGeocoder from 'node-geocoder';
-import { BuildingsAccessObject } from '/imports/database/buildings';
+import { BuildingsAccessObject } from '/server/database/buildings';
 import { Meteor } from 'meteor/meteor';
 
 const geocoder = NodeGeocoder(Meteor.settings.geocoderOptions);

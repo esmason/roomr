@@ -1,4 +1,4 @@
-import { BuildingsAccessObject } from '/imports/database/buildings';
+import { BuildingsAccessObject } from '/server/database/buildings';
 import { getDistanceFromLatLonInKm } from '../utilities/distance-utils';
 import { mongoToLocalTime, stringToLocalTime } from '../utilities/date-time-utils';
 

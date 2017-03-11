@@ -1,6 +1,6 @@
-import { BuildingsAccessObject } from '/imports/database/buildings';
-import { RoomsAccessObject } from '/imports/database/rooms';
-import { RoomSlotsAccessObject } from '/imports/database/roomSlots';
+import { BuildingsAccessObject } from '/server/database/buildings';
+import { RoomsAccessObject } from '/server/database/rooms';
+import { RoomSlotsAccessObject } from '/server/database/roomSlots';
 import { persistScraperRoomSlots } from './database_initialization/database-construction';
 import { getClosestAvailableBuildings } from './database_access/retrieve-buildings.js';
 
