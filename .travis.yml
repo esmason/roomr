@@ -20,4 +20,4 @@ addons:
     packages:
       - g++-4.8
 script:
-  -meteor test --once --driver-package dispatch:mocha
+  - meteor test --once --driver-package dispatch:mocha
