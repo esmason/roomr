@@ -7,7 +7,10 @@ node_js:
 
 before_install:
   - "curl -L https://git.io/ejPSng | /bin/sh"
+  - "npm install -g mocha"
 
+install:
+  - "npm install chai"
 env:
   - CXX=g++-4.8
 addons:
@@ -17,4 +20,3 @@ addons:
     packages:
       - g++-4.8
 
-script: meteor test --driver-package=practicalmeteor:mocha
